@@ -21,6 +21,7 @@
 #include "osu_timer.h"
 #include "osu_dispatch_queue.h"
 #include "osu_string.h"
+#include "osu_cmd_parser.h"
 
 
 

@@ -6,6 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+    osu::CommandLineParser parser(argc, argv);
+    parser.ProcessFlags();
+
     uint64_t timer_id;
     osu::TimerQueuePtr timerQueuePtr = osu::TimerQueue::create();
     timerQueuePtr->create_timer(1000, []{

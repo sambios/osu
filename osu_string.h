@@ -5,6 +5,7 @@
 #ifndef PROJECT_OSU_STRING_H
 #define PROJECT_OSU_STRING_H
 #include <vector>
+#include "osu_buffer.h"
 namespace osu {
 
     static bool start_with(const std::string &str, const std::string &head)
@@ -55,16 +56,25 @@ namespace osu {
 
     static std::string format(const char *fmt, ...) {
 
-        char buffer[1024];
-        va_list args;
-        auto buffer_size=sizeof(buffer);
-        va_start(args, fmt);
-        vsnprintf(buffer, buffer_size, fmt, args);
-        va_end(args);
+        AutoBuffer<char, 1024> buf;
 
-        buffer[buffer_size]='\0';
+        for ( ; ; )
+        {
+            va_list va;
+            va_start(va, fmt);
+            int bsize = static_cast<int>(buf.size());
+            int len = vsnprintf(buf.data(), bsize, fmt, va);
+            va_end(va);
 
-        return std::string(std::move(buffer));
+            assert(len >= 0 && "Check format string for errors");
+            if (len >= bsize)
+            {
+                buf.resize(len + 1);
+                continue;
+            }
+            buf[bsize - 1] = 0;
+            return std::string(buf.data(), len);
+        }
     }
 }
 #endif //PROJECT_OSU_STRING_H

@@ -5,6 +5,11 @@
 #ifndef PROJECT_OSU_DISPATCH_QUEUE_H
 #define PROJECT_OSU_DISPATCH_QUEUE_H
 
+#include <iostream>
+#include <queue>
+#include <deque>
+#include <thread>
+
 namespace osu {
     class DispatchQueue {
     public:
