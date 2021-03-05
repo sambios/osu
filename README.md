@@ -1,2 +1,2 @@
-# apl
-Abstract portable layer.
+# osu
+OS utilities
